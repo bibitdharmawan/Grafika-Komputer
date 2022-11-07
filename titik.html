@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>Membuat Titik</title>
+    </head>
+    <style>      
+        #myCanvas {
+            border: 1px solid black;
+        }
+    </style>
+    <body>
+        <canvas id="myCanvas" width="3" height="3"></canvas>
+        <script>
+            myCanvas = document.querySelector(`#myCanvas`);
+            var context;
+            context = myCanvas.getContext("2d");
+            // context.fillStyle = "#03cffc";
+            // context.fillRect(10,10,300,400);
+            var imageData = context.getImageData(0,0,myCanvas.width,myCanvas.height);
+            imageData.data[0]=255;
+            imageData.data[1]=0;
+            imageData.data[2]=255;
+            imageData.data[3]=255;
+            context.putImageData(imageData,0,0);
+        </script>
+    </body>
+</html>
