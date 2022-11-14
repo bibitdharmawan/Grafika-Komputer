@@ -1,0 +1,171 @@
+<html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=500, initial-scale=1.0">
+  <title>Titik</title>
+<style>
+  #myCanvas {
+    border: 1px solid black;
+  }
+
+  #myCanvas2 {
+    border: 1px solid black;
+  }
+</style></head>
+
+
+<body>
+  <!-- red :<input type="range" min="0" max="255" id="red" value="200"> <br>
+  green :<input type="range" min="0" max="255" id="green" value="0"> <br>
+  blue :<input type="range" min="0" max="255" id="blue" value="0"> <br> -->
+  Start X : <input type="range" min="0" max="400" id="start_x" onchange="loadBezierCurve()" value="20"> <br>
+  Start Y : <input type="range" min="0" max="400" id="start_y" onchange="loadBezierCurve()" value="20"> <br>
+  Control Point X1 : <input type="range" min="0" max="400" id="cpx1" onchange="loadBezierCurve()" value="20"> <br>
+  Control Point Y1 : <input type="range" min="0" max="400" id="cpy1" onchange="loadBezierCurve()" value="100"> <br>
+  Control Point X2 : <input type="range" min="0" max="400" id="cpx2" onchange="loadBezierCurve()" value="200"> <br>
+  Control Point Y2 : <input type="range" min="0" max="400" id="cpy2" onchange="loadBezierCurve()" value="100"> <br>
+  End X : <input type="range" min="0" max="400" id="end_x" onchange="loadBezierCurve()" value="200"> <br>
+  End Y : <input type="range" min="0" max="400" id="end_y" onchange="loadBezierCurve()" value="20"> <br>
+  <canvas id="myCanvas" width="400" height="400"></canvas>
+  <canvas id="myCanvas2" width="400" height="400"></canvas>
+  <script>
+    myCanvas = document.querySelector('#myCanvas');
+    var context = myCanvas.getContext("2d");
+
+    var image1 = new Image();
+    image1.src = "1.jpg";
+
+    // image1.onload = function () {
+    //   pattern = context.createPattern(image1, "repeat");
+    //   context.fillStyle = pattern;
+    //   context.beginPath();
+    //   context.moveTo(0, 0);
+    //   context.lineTo(200, 00);
+    //   context.lineTo(200, 200);
+    //   context.lineTo(0, 200);
+    //   context.closePath();
+    //   context.fill();
+    // }
+
+    // var image = new Image();
+    // image.src = "2.png";
+
+    // image.onload = function () {
+    //   pattern = context.createPattern(image, "repeat");
+    //   context.fillStyle = pattern;
+    //   context.beginPath();
+    //   context.moveTo(0, 0);
+    //   context.lineTo(150, 00);
+    //   context.lineTo(150, 150);
+    //   context.lineTo(0, 150);
+    //   context.closePath();
+    //   context.fill();
+    // }
+
+    // Ellipse
+    function drawEllipse(x, y, radian_width, radian_height, line_width = 1, stroke_style = "black", fill_style = '') {
+      context.save();
+      context.scale(1, radian_height / radian_width);
+      context.beginPath();
+      context.arc(x, y, radian_width, 0 * Math.PI, 2 * Math.PI);
+      context.restore();
+      context.lineWidth = line_width;
+      context.strokeStyle = "black";
+      context.stroke();
+      if (fill_style != '') {
+        if (fill_style == 'linear_gradient') {
+          var gradient = context.createLinearGradient(10, 0, 250, 0);
+          gradient.addColorStop(0, 'red');
+          gradient.addColorStop(1, 'blue');
+          fill_style = gradient;
+        } else if (fill_style == 'radial_gradient') {
+          var gradient = context.createRadialGradient(150, 50, 180, 20, 20, 30);
+          gradient.addColorStop(0, 'red');
+          gradient.addColorStop(0.5, 'green');
+          gradient.addColorStop(1, 'blue');
+          fill_style = gradient;
+        }
+        context.fillStyle = fill_style;
+        context.fill();
+      }
+    }
+
+
+    function smile() {
+      red = document.getElementById('red').value;
+      green = document.getElementById('green').value;
+      blue = document.getElementById('blue').value;
+      console.log(red, green, blue)
+      fill_body = "rgb(" + red + ", " + green + ", " + blue + ")";
+      // Lingkar luar
+      drawEllipse(200, 200, 180, 90, 15, 'black', fill_body);
+      //Pattern
+
+      // Bibir 
+      context.beginPath();
+      context.arc(200, 120, 20, 0 * Math.PI, 1 * Math.PI);
+      context.lineWidth = 4;
+      context.strokeStyle = "black";
+      context.stroke();
+
+      // Mata Kiri
+      drawEllipse(140, 30, 10, 20, 1, 'black', 'black');
+      drawEllipse(136, 55, 6, 6, 1, 'white', 'white');
+
+      // Mata Kanan
+      drawEllipse(260, 30, 10, 20, 1, 'black', 'black');
+      drawEllipse(257, 55, 6, 6, 1, 'white', 'white');
+    }
+
+    // document.getElementById("red").addEventListener("change", function () {
+    //   smile();
+    // })
+    // document.getElementById("green").addEventListener("change", function () {
+    //   smile();
+    // })
+    // document.getElementById("blue").addEventListener("change", function () {
+    //   smile();
+    // })
+    // context.moveTo(500, 50);
+    // context.lineTo(500, 250);
+    // context.arc(500, 250, 200, 1.5 * Math.PI, Math.PI, true);
+    // context.lineTo(500, 250);
+    // context.stroke();
+
+    myCanvas2 = document.querySelector('#myCanvas2');
+    var context2 = myCanvas2.getContext("2d");
+
+    loadBezierCurve();
+    function loadBezierCurve() {
+      context2.setLineDash([0,0]);
+      start_x = document.getElementById("start_x").value;
+      start_y = document.getElementById("start_y").value;
+      cpx1 = document.getElementById("cpx1").value;
+      cpy1 = document.getElementById("cpy1").value;
+      cpx2 = document.getElementById("cpx2").value;
+      cpy2 = document.getElementById("cpy2").value;
+      end_x = document.getElementById("end_x").value;
+      end_y = document.getElementById("end_y").value;
+      context2.clearRect(0, 0, myCanvas2.width, myCanvas2.height);
+      context2.beginPath();
+      context2.moveTo(start_x, start_y);
+      context2.bezierCurveTo(cpx1, cpy1, cpx2, cpy2, end_x, end_y);
+      context2.strokeStyle="black";
+      context2.lineWidth=2;
+      context2.stroke();
+      
+      context2.setLineDash([1, 2]);
+      context2.beginPath();
+      context2.moveTo(start_x, start_y);
+      context2.lineTo(cpx1,cpy1);
+      context2.lineTo(cpx2,cpy2);
+      context2.lineTo(end_x,end_y);
+      context2.strokeStyle="red";
+      context2.lineWidth=1;
+
+      context2.stroke();
+    }
+  </script>
+
+
+</body></html>
