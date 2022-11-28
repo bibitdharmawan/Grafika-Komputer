@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=500, initial-scale=1.0">
+  <title>UTS</title>
+</head>
+<style>
+  #myCanvas {
+    border: 1px solid rgb(0, 0, 0);
+  }
+</style>
+
+<body>
+  <canvas id="myCanvas" width="400" height="400"></canvas>
+  <script>
+    myCanvas = document.querySelector('#myCanvas');
+    var context = myCanvas.getContext("2d"); 
+    function drawEllipse(x,y, radian_width, radian_height,lineWidth) {
+        context.save();
+        context.scale(1, radian_height / radian_width);
+        context.beginPath();
+        context.arc(x,y, radian_width, 0 * Math.PI, 2* Math.PI);
+        context.restore();
+        context.lineWidth=lineWidth;
+        context.strokeStyle="black";
+        context.stroke();
+
+    }
+    drawEllipse(200,200,150,150,3);
+        var gradient =context.createLinearGradient(0,10,200,120);
+        var gradient =context.createRadialGradient(120,70,11,120,70,100);
+        gradient.addColorStop(1,"yellow");
+        context.fillStyle = gradient;
+        context.fill(); 
+        context.beginPath();
+        context.moveTo(165,115);
+        context.lineTo(115,170);
+        context.moveTo(160,115);
+        context.lineTo(205,177);
+        context.lineWidth=10;
+        context.stroke();
+
+        context.beginPath();
+        context.moveTo(265,115);
+        context.lineTo(215,170);
+        context.moveTo(260,115);
+        context.lineTo(305,177);
+        context.lineWidth=10;
+        context.stroke();
+
+        context.beginPath();
+        context.moveTo(260,230);
+        context.bezierCurveTo(260,357,130,357,140,230);
+        context.lineWidth=3;
+        context.fillStyle="black";
+        context.fill();
+
+
+
+
+    
+
+    </script>
+</body>
