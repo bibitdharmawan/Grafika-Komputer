@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Animasi2</title>
+        <style>
+            #myCanvas {
+                border: 1px solid black;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="myCanvas" width="1300" height="700"></canvas>
+        <script>
+            myCanvas=document.querySelector('#myCanvas');
+            var context = myCanvas.getContext("2d");
+
+            // nilai awal
+            x = 0;
+            y = 200;
+            speed_x =25;
+            speed_y=15;
+            // fungsi
+            function drawAnimate() {
+                context.clearRect(0, 0, innerWidth, innerHeight);
+                context.fillStyle = "lightblue";
+                context.beginPath();
+                context.arc(x,y,50,0,2 * Math.PI);
+                context.fill();
+                context.stroke();
+                
+                if (x>1200 || x <0) {
+                    speed_x = -speed_x;
+                }
+                if (y>600 || y<0) {
+                    speed_y = -speed_y;
+                }
+                x += speed_x;
+                y += speed_y;
+                window.requestAnimationFrame(drawAnimate); //method
+            }
+            drawAnimate(); //Pemangglilan fungsi pertama kali
+        </script>
+    </body>
+</html>
